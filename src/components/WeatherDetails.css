@@ -1,0 +1,229 @@
+.weather-details {
+    margin-top: var(--space-8);
+}
+
+.weather-details__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+}
+
+.detail-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5);
+    transition: all var(--transition-base);
+    overflow: hidden;
+}
+
+.detail-card:hover {
+    border-color: var(--color-border-hover);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.detail-card__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+}
+
+.detail-card__emoji {
+    font-size: var(--font-size-xl);
+}
+
+.detail-card__title {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.detail-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.detail-card__body--center {
+    align-items: center;
+}
+
+/* Wind Compass */
+.detail-card__compass {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.detail-card__compass-ring {
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.detail-card__compass-arrow {
+    font-size: var(--font-size-xl);
+    color: var(--color-accent-cool);
+    transition: transform var(--transition-slow);
+}
+
+.detail-card__compass-label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.detail-card__stats {
+    display: flex;
+    gap: var(--space-6);
+    margin-top: var(--space-2);
+}
+
+.detail-card__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.detail-card__stat-value {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.detail-card__stat-unit {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.detail-card__stat-label {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* UV */
+.detail-card__uv-circle {
+    width: 80px;
+    height: 80px;
+    border: 4px solid;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail-card__uv-value {
+    font-size: var(--font-size-2xl);
+    font-weight: 800;
+    color: var(--color-text-primary);
+}
+
+.detail-card__uv-label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    margin-top: var(--space-2);
+}
+
+.detail-card__uv-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin-top: var(--space-2);
+}
+
+.detail-card__uv-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width var(--transition-slow);
+}
+
+/* AQI */
+.detail-card__aqi-badge {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-2xl);
+    font-weight: 800;
+    color: white;
+}
+
+.detail-card__aqi-label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-top: var(--space-1);
+}
+
+.detail-card__aqi-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-1) var(--space-4);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    margin-top: var(--space-2);
+}
+
+/* Humidity Ring */
+.detail-card__humidity-ring {
+    width: 120px;
+    height: 120px;
+}
+
+.detail-card__humidity-svg {
+    width: 100%;
+    height: 100%;
+}
+
+.detail-card__humidity-progress {
+    transition: stroke-dasharray var(--transition-slow);
+}
+
+/* Big Values */
+.detail-card__big-value {
+    font-size: var(--font-size-4xl);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1;
+}
+
+.detail-card__big-unit {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+}
+
+.detail-card__secondary {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .weather-details__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .weather-details__grid {
+        grid-template-columns: 1fr;
+    }
+}
