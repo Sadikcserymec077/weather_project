@@ -4,7 +4,7 @@ import { fetchCurrentWeather, fetchForecast, fetchAstronomy } from '../utils/api
 const WeatherContext = createContext(null);
 
 export function WeatherProvider({ children }) {
-    const [city, setCity] = useState(() => localStorage.getItem('weather_city') || 'Bangalore');
+    const [city, setCity] = useState(() => localStorage.getItem('weather_city') || null);
     const [currentWeather, setCurrentWeather] = useState(null);
     const [forecast, setForecast] = useState(null);
     const [astronomy, setAstronomy] = useState(null);
@@ -28,6 +28,12 @@ export function WeatherProvider({ children }) {
                 fetchForecast(query, 3),
                 fetchAstronomy(query),
             ]);
+
+            // Check if currentData contains valid location info
+            if (!currentData || !currentData.location) {
+                throw new Error("Invalid weather data received");
+            }
+
             setCurrentWeather(currentData);
             setForecast(forecastData);
             setAstronomy(astroData);
@@ -38,7 +44,8 @@ export function WeatherProvider({ children }) {
             localStorage.setItem('weather_city', cityName);
 
             setRecentCities((prev) => {
-                const updated = [cityName, ...prev.filter((c) => c !== cityName)].slice(0, 8);
+                const unique = prev.filter((c) => c !== cityName);
+                const updated = [cityName, ...unique].slice(0, 8);
                 localStorage.setItem('weather_recent', JSON.stringify(updated));
                 return updated;
             });
@@ -59,7 +66,26 @@ export function WeatherProvider({ children }) {
 
     // Load weather on mount
     useEffect(() => {
-        loadWeather(city);
+        if (city) {
+            loadWeather(city);
+        } else {
+            // Try to get user's location
+            if (navigator.geolocation) {
+                setLoading(true);
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        loadWeather(`${latitude},${longitude}`);
+                    },
+                    (err) => {
+                        console.warn("Geolocation denied or failed:", err);
+                        loadWeather('Bangalore'); // Fallback default
+                    }
+                );
+            } else {
+                loadWeather('Bangalore'); // Fallback if no geolocation support
+            }
+        }
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const value = {
